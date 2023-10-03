@@ -1,0 +1,131 @@
+doc = FreeCAD.newDocument()
+
+box = doc.addObject("Part::Box", "myBox")
+
+doc.recompute()
+
+
+box.Height = 5
+
+
+myvec = FreeCAD.Vector(2, 0, 0)
+myvec.x
+myvec.y
+othervec = FreeCAD.Vector(0, 3, 0)
+sumvec = myvec.add(othervec)
+
+
+box.Placement
+box.Placement.Base
+box.Placement.Base = sumvec
+ 
+otherpla = FreeCAD.Placement()
+box.Placement = otherpla
+
+#数据
+#box.Object
+
+#视图
+vo = box.ViewObject
+
+vo.Transparency = 80
+vo.hide()
+vo.show()
+
+
+doc.supportedTypes()
+
+
+
+
+
+import Mesh
+mymesh = Mesh.createSphere()
+mymesh.Facets
+mymesh.Points
+ 
+meshobj = doc.addObject("Mesh::Feature", "MyMesh")
+meshobj.Mesh = mymesh
+doc.recompute()
+
+
+
+import Part
+myshape = Part.makeSphere(10)
+myshape.Volume
+myshape.Area
+
+shapeobj = doc.addObject("Part::Feature", "MyShape")
+shapeobj.Shape = myshape
+doc.recompute()
+
+Part.show(myshape)
+
+import Draft
+rec = Draft.makeRectangle(5, 2)
+mvec = FreeCAD.Vector(4, 4, 0)
+Draft.move(rec, mvec)
+Draft.move(box, mvec)
+
+
+from PySide import QtGui
+QtGui.QMessageBox.information(None, "Apollo program", "Houston, we have a problem")
+
+
+
+#Add a line
+
+import Part,PartGui 
+doc=App.activeDocument() 
+# add a line element to the document and set its points 
+l=Part.LineSegment()
+l.StartPoint=(0.0,0.0,0.0)
+l.EndPoint=(1.0,1.0,1.0)
+doc.addObject("Part::Feature","Line").Shape=l.toShape() 
+doc.recompute()
+
+
+#Add a polygon
+
+import Part, PartGui 
+doc = App.activeDocument()
+n = list() 
+
+# create a 3D vector, set its coordinates and add it to the list 
+v = App.Vector(0,0,0) 
+n.append(v) 
+v = App.Vector(10,0,0) 
+n.append(v) 
+#... repeat for all nodes 
+
+# Create a polygon object and set its nodes 
+p = doc.addObject("Part::Polygon","Polygon") 
+p.Nodes = n 
+doc.recompute()
+
+import Mesh
+doc=App.activeDocument()
+# create a new empty mesh
+m = Mesh.Mesh()
+# build up box out of 12 facets
+m.addFacet(0.0,0.0,0.0, 0.0,0.0,1.0, 0.0,1.0,1.0)
+m.addFacet(0.0,0.0,0.0, 0.0,1.0,1.0, 0.0,1.0,0.0)
+m.addFacet(0.0,0.0,0.0, 1.0,0.0,0.0, 1.0,0.0,1.0)
+m.addFacet(0.0,0.0,0.0, 1.0,0.0,1.0, 0.0,0.0,1.0)
+m.addFacet(0.0,0.0,0.0, 0.0,1.0,0.0, 1.0,1.0,0.0)
+m.addFacet(0.0,0.0,0.0, 1.0,1.0,0.0, 1.0,0.0,0.0)
+m.addFacet(0.0,1.0,0.0, 0.0,1.0,1.0, 1.0,1.0,1.0)
+m.addFacet(0.0,1.0,0.0, 1.0,1.0,1.0, 1.0,1.0,0.0)
+m.addFacet(0.0,1.0,1.0, 0.0,0.0,1.0, 1.0,0.0,1.0)
+m.addFacet(0.0,1.0,1.0, 1.0,0.0,1.0, 1.0,1.0,1.0)
+m.addFacet(1.0,1.0,0.0, 1.0,1.0,1.0, 1.0,0.0,1.0)
+m.addFacet(1.0,1.0,0.0, 1.0,0.0,1.0, 1.0,0.0,0.0)
+# scale to a edge langth of 100
+m.scale(100.0)
+# add the mesh to the active document
+me=doc.addObject("Mesh::Feature","Cube")
+me.Mesh=m
+
+
+
+
